@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  a(href="input") Change input
+  #tabs
+    ul
+      each val in categories
+        li
+          a(href='#'+val.replace(" ", "-"))= val
+      else
+        li
+          a(href="#null") No user input
+    each val, index in categories
+      div(id=val.replace(" ", "-"))
+        each article in articles[index]
+          .card
+            h3
+              a(href=article.url, target="_blank") #{article.title} (#{article.definedCategory})
+            //- p predefined: #{article.definedCategory}
+            //- p top 3 scores: 
+            table
+              tr
+                th #
+                th Category
+                th Similarity score
+              each pair, index in article.top3
+                tr
+                  td= index+1
+                  td= pair.category
+                  td= pair.score
+        else
+          p No articles in this category
+    else
+      p No categories are provided

@@ -1,0 +1,21 @@
+[{
+    "id": "business",
+    "featureWords": ["finances", "stock", "company", "market", "economics"]
+  },
+  {
+    "id": "entertainment",
+    "featureWords": ["internet", "music", "video", "movie", "art", "television", "games", "fun", "humor"]
+  },
+  {
+    "id": "politics",
+    "featureWords": ["government", "elections", "regime", "law", "administration", "police"]
+  },
+  {
+    "id": "sport",
+    "featureWords": ["ball", "football", "soccer", "hockey", "basketball", "tennis", "game", "tournament", "team", "athletics", "baseball", "olympic"]
+  },
+  {
+    "id": "tech",
+    "featureWords": ["computer", "gadget", "smartphone", "internet", "electronics", "software"]
+  }
+]

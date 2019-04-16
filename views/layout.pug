@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    title Algorithm
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', media='screen', href='/stylesheets/jquery-ui.css')
+    link(rel='stylesheet', type='text/css', media='screen', href='/stylesheets/style.css')
+    script(src='/javascripts/jquery.js')
+    script(src='/javascripts/jquery-ui.js')
+    script.
+      $(() => {
+        $("#tabs").tabs();
+      });
+    style.
+  body
+    .header
+      .menu
+        a.item(href="/") Main
+        a.item(href="/manage") Manage
+        a.item(href="/results") Results
+    .content
+      block content

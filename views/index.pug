@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  .title All categories
+  .grid#grid
+    each val, index in categories
+      .item
+        .name-b
+          .name= val
+          .count #{articles[index].length}
+        .articles
+          each article in articles[index]
+            a.article #{article.title}
+    else
+      div No user input
+  script.
+    var colors = ['#ff000077', '#00ff0077', '#00aaff77', '#ffaa0077', '#00ffaa77', '#aa00ff77', '#ff00aa77', '#aaff0077', '#0000ff77','#ff000077', '#00ff0077', '#0000ff77'];
+    var els = document.getElementById('grid').childNodes;
+    els.forEach((el, i) => el.firstChild.style.backgroundColor =  colors[i]);

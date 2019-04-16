@@ -1,0 +1,105 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box; }
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+
+.header {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  background-color: #343434; }
+  .header .menu {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    right: 200px; }
+    .header .menu .item {
+      color: white;
+      width: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-left: 1px solid white;
+      border-right: 1px solid white;
+      cursor: pointer;
+      text-decoration: none; }
+      .header .menu .item:hover {
+        font-weight: bold; }
+
+.content {
+  width: 100%; }
+
+.title {
+  width: 100%;
+  padding: 20px;
+  font-size: 28px;
+  text-align: center; }
+
+.grid {
+  display: grid;
+  width: 960px;
+  margin: auto;
+  grid-template-columns: 300px 300px 300px;
+  grid-gap: 30px; }
+  .grid .item {
+    height: 400px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px; }
+    .grid .item .name-b {
+      display: flex;
+      flex-direction: row;
+      font-size: 1.1rem;
+      width: 100%;
+      padding: 10px 32px;
+      text-transform: capitalize; }
+      .grid .item .name-b .name {
+        flex-grow: 1; }
+      .grid .item .name-b .count {
+        flex-grow: 1;
+        text-align: right; }
+    .grid .item .articles {
+      width: 100%;
+      overflow-y: scroll;
+      padding: 10px; }
+      .grid .item .articles .article {
+        cursor: pointer;
+        display: block;
+        margin: 10px 5px; }
+
+.labels-b {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px; }
+  .labels-b form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .labels-b form > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+    .labels-b form .label {
+      border: none;
+      margin: 3px;
+      border: 3px solid transparent;
+      text-align: center; }
+      .labels-b form .label:focus {
+        background-color: white; }
+    .labels-b form #add {
+      width: 100%;
+      cursor: pointer;
+      background: white;
+      padding: 3px;
+      color: #4444FF;
+      border: 1px dashed #4444FF; }
+
+/*# sourceMappingURL=style.css.map */

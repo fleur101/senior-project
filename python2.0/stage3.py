@@ -1,17 +1,17 @@
 # Requirements
 # pip install numpy
 # pip install scipy
-# pip install spacy
-# python -m spacy download en_core_web_lg
+# pip install tensorflow
 
-import nltk
+# import nltk
 import json
-import spacy
+# import spacy
 import joblib
 from scipy import spatial 
 import numpy as np
 from operator import itemgetter
-nlp = spacy.load("en_core_web_lg")
+import sklearn
+# nlp = spacy.load("en_core_web_lg")
 
 import tensorflow as tf
 import tensorflow_hub as hub
@@ -38,8 +38,8 @@ USER_INPUT_FN = PATH + "userCategories.json"
 
 # file named ARTICLES_FN contains a JSON array of all articles.
 # format: [{ title: string, text: string, url: string, source_url: string, predefinedCategory: string }]
-# ARTICLES_FN = PATH + "bbcArticlesWithWikipediaPredefined.json"
-ARTICLES_FN = PATH + "mock_data.json"
+ARTICLES_FN = PATH + "bbcArticlesWithWikipediaPredefined.json"
+# ARTICLES_FN = PATH + "mock_data.json"
 
 # file named CLUSTERING_MODEL_FN contains a joblib model of clustering algorithm.
 MODEL_FN = PATH + "model_clustering.joblib"
@@ -60,7 +60,7 @@ OUTPUT_FN = PATH + "categorizedArticles.json"
 
 # This model makes a
 def model2_match_user_input(userInputFilename, articlesFilename,
-                            predefinedCategoriesFilename, outputFilename, modelFilename):
+                         outputFilename, modelFilename):
     # Open files
     with open(userInputFilename) as f:
         userCats = json.load(f)
@@ -68,26 +68,41 @@ def model2_match_user_input(userInputFilename, articlesFilename,
         articles = json.load(f)
     # with open(predefinedCategoriesFilename) as f:
     #     definedCats = json.load(f)
-    with open(modelFilename) as f:
-        model = joblib.load(f)
+    model = joblib.load(modelFilename)
 
     # map user input to clusters
-    userVecs = [getFeatures(x) for x in userCats]
-    userToPredefined = [model.predict(x) for x in userVecs]
+    userVecs = getFeatures(userCats)
+    userToPredefined = model.predict(userVecs)
 
     result = [[] for _ in range(len(userCats))]
     for article in articles:
         # compute distance to each user
-        distances = [100*(1-spatial.distance.cosine(model.cluster_centers_[article['predefinedCategory']], model.cluster_centers_[x])) for x in userToPredefined]
-        selectedCategory =  np.argmax(distnaces)
-        article['selectedCategory'] = selectedCategory
+        distances = [np.int(100*(1-spatial.distance.cosine(model.cluster_centers_[article['predefinedCategory']], x))) for x in userVecs]
+        selectedCategory = np.argmax(distances)
+        article['selectedCategory'] = np.int(selectedCategory)
         article['percentageScores'] = distances
+        if 'title' not in article:
+            article['title'] = article['text'][:100]+"..."
+        del article['text']
         result[selectedCategory].append(article)
 
     with open(PATH + OUTPUT_FN, 'w') as file:
         file.write(json.dumps(result))
+    hit = 0
+    miss = 0
+    for ind, x in enumerate(result):
+        for y in x:
+            if userCats.index(y['original_category']) == ind:
+                hit += 1
+            else:
+                miss +=1
+    print("result: ")
+    print(f"hits: {hit}")
+    print(f"miss: {miss}")
+    print(f"score: {hit/(hit+miss)}")
 
 
 if __name__ == "__main__":
+    print("Started matching")
     model2_match_user_input(USER_INPUT_FN, ARTICLES_FN,
-                            PREDEFINED_CATEGORIES_FN, OUTPUT_FN, MODEL_FN)
+                            OUTPUT_FN, MODEL_FN)

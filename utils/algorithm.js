@@ -3,8 +3,8 @@ const path = require('path');
 let debug = require("debug")("server-express:algorithm");
 var execSync = require('child_process').execSync;
 
-const RESULTS_PATH = path.join(__dirname, '../data/categorizedArticles.json');
-const CATEGORIES_PATH = path.join(__dirname, '../data/userCategories.json');
+const RESULTS_PATH = path.join(__dirname, '../data2.0/categorizedArticles.json');
+const CATEGORIES_PATH = path.join(__dirname, '../data2.0/userCategories.json');
 
 function getResults() {
   return JSON.parse(fs.readFileSync(RESULTS_PATH, 'utf8'));
@@ -16,7 +16,7 @@ function getCategories() {
 
 function runCode() {
   debug("starting execution");
-  execSync('cd ' + __dirname + '/../python && python algorithm.py');
+  execSync('cd ' + __dirname + '/../python && python2.0 stage3.py');
   debug("executed");
 }
 

@@ -10,6 +10,7 @@ import spacy
 import joblib
 from scipy import spatial 
 import numpy as np
+from operator import itemgetter
 nlp = spacy.load("en_core_web_lg")
 
 import tensorflow as tf
@@ -24,7 +25,7 @@ def getFeatures(arrayOfTexts):
 
 
 # The path to the folder with data
-PATH = "../data/"
+PATH = "../data2.0/"
 
 # file named USER_INPUT_FN contains a JSON array of strings
 # format: [string]
@@ -37,13 +38,22 @@ USER_INPUT_FN = PATH + "userCategories.json"
 
 # file named ARTICLES_FN contains a JSON array of all articles.
 # format: [{ title: string, text: string, url: string, source_url: string, predefinedCategory: string }]
-ARTICLES_FN = PATH + "articlesWithWikipediaPredefined.json"
+ARTICLES_FN = PATH + "bbcArticlesWithWikipediaPredefined.json"
 
 # file named CLUSTERING_MODEL_FN contains a joblib model of clustering algorithm.
 MODEL_FN = PATH + "model_clustering.joblib"
 
 # file named OUTPUT_FN will be created, containing an array of article group
-# format: [{ title: string, url: string, source_url: string, predefinedCategory: string, category: string }]
+# format: 
+# [
+    # [{ 
+        # selectedCategory: string,
+        # percentageScores: string,
+        # title: string,
+        # url?: string,
+        # source_url?: string,
+    # }]
+# ]
 OUTPUT_FN = PATH + "categorizedArticles.json"
 
 
@@ -54,22 +64,24 @@ def model2_match_user_input(userInputFilename, articlesFilename,
     with open(userInputFilename) as f:
         userCats = json.load(f)
     with open(articlesFilename) as f:
-        artilces = json.load(f)
-    with open(predefinedCategoriesFilename) as f:
-        definedCats = json.load(f)
+        articles = json.load(f)
+    # with open(predefinedCategoriesFilename) as f:
+    #     definedCats = json.load(f)
     with open(modelFilename) as f:
         model = joblib.load(f)
 
     # map user input to clusters
     userVecs = [getFeatures(x) for x in userCats]
     userToPredefined = [model.predict(x) for x in userVecs]
-    
+
+    result = [[] for _ in range(len(userCats))]
     for article in articles:
         # compute distance to each user
-        distances = [spatial.distance.cosine(model.cluster_centers_[article['predefinedCategory']], model.cluster_centers_[x]) for x in userToPredefined]
-        distances = sorted(enumerate(distances), lambda x: x[1])
-        article['category'] = userCats[distances[0][0]]
-        article['distances'] = distances 
+        distances = [100*(1-spatial.distance.cosine(model.cluster_centers_[article['predefinedCategory']], model.cluster_centers_[x])) for x in userToPredefined]
+        selectedCategory =  np.argmax(distnaces)
+        article['selectedCategory'] = selectedCategory
+        article['percentageScores'] = distances
+        result[selectedCategory].append(article)
 
     with open(PATH + OUTPUT_FN, 'w') as file:
         file.write(json.dumps(result))

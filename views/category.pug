@@ -89,7 +89,7 @@ block content
                 initChart()
             }
             chart.data.labels = categories;
-            chart.data.datasets[0].data = articles[index].categories;
+            chart.data.datasets[0].data = articles[index].percentageScores;
             chart.update()
         }
 

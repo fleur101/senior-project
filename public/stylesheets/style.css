@@ -131,7 +131,10 @@ ol, ul {
         cursor: pointer;
         padding: 15px;
         border-bottom: 1px solid #e0e0e0; }
-        .category-b .left .list-b ol li:hover {
+        .category-b .left .list-b ol li p {
+          text-decoration: none;
+          text-align: right; }
+        .category-b .left .list-b ol li:hover > span {
           text-decoration: underline; }
         .category-b .left .list-b ol li.active {
           font-weight: bold; }

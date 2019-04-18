@@ -145,11 +145,14 @@ ol, ul
           cursor: pointer
           padding: 15px
           border-bottom: 1px solid #e0e0e0
-          &:hover
+          & p
+            text-decoration: none
+            text-align: right
+          &:hover > span
             text-decoration: underline
           &.active
             font-weight: bold
-      
+
   .right
     outline: 1px solid green
     flex-grow: 1

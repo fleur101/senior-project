@@ -8,7 +8,9 @@ block content
             .list-b
                 ol#a-list
                     each el, index in articles
-                        li #{el.title} + #{el.original_category}
+                        li 
+                            span #{el.title}
+                            p True category: #{el.original_category}
         .right#rightPanel
             #articleName.title
             canvas#myChart

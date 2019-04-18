@@ -6,6 +6,9 @@
 body
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
 
+ol, ul
+  list-style-position: inside
+
 .header
   position: relative
   width: 100%
@@ -112,3 +115,35 @@ body
       padding: 3px
       color: #4444FF
       border: 1px dashed #4444FF
+
+
+.category-b
+  display: flex
+  flex-direction: row
+  height: 500px
+  width: 1000px
+  margin: auto
+  .left
+    margin-right: 40px
+    outline: 1px solid blue
+    flex-grow: 1
+    flex-basis: 1px
+    height: 100%
+    .title
+      font-size: 24px
+      padding: 5px
+    .list-b
+      background-color: #f0f0f0
+      ol
+        li
+          cursor: pointer
+          padding: 15px
+          border-bottom: 1px solid #e0e0e0
+          &:hover
+            text-decoration: underline
+      
+  .right
+    outline: 1px solid green
+    flex-grow: 1
+    flex-basis: 1px
+    height: 100%

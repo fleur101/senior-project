@@ -1,0 +1,91 @@
+extends layout
+
+block content
+    .title #{title}
+    .category-b
+        .left
+            .title Articles
+            .list-b
+                ol#a-list
+                    each el, index in articles
+                        li #{el.title}
+        .right#rightPanel
+            .title Name of article
+            canvas#myChart
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js")
+    script.
+        articles = JSON.parse('!{JSON.stringify(articles)}');
+        window.categories = !{JSON.stringify(categories)};
+        function changeRight(index) {
+            document.getElementById("rightPanel").innerText = articles[index].title
+        }
+
+        // Set first article
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('id')){
+            i = urlParams.get('id')
+            if (i < articles.length){
+                changeRight(i)
+            }
+        }
+
+        // Set listener
+        document.getElementById("a-list").childNodes.forEach((el, index) => {
+            el.addEventListener("click", (event) => changeRight(index))
+        })
+        //- var colors = ['#ff000077', '#00ff0077', '#00aaff77', '#ffaa0077', '#00ffaa77', '#aa00ff77', '#ff00aa77', '#aaff0077', '#0000ff77','#ff000077', '#00ff0077', '#0000ff77'];
+        //- var els = document.getElementById('grid').childNodes;
+        //- els.forEach((el, i) => el.firstChild.style.backgroundColor =  colors[i]);
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: categories,
+                datasets: [{
+                    label: 'Score',
+                    backgroundColor: ['#ff000077', '#00ff0077', '#00aaff77', '#ffaa0077'],
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: articles[0].categories
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Category'
+                        },
+                        gridLines: {
+                            display: false
+                        },
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Similarity percentage'
+                        },
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            callback: function (value) {
+                                return value + '%';
+                            },  
+                        }
+                    }]
+                }
+            }
+        });

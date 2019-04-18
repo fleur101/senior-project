@@ -38,7 +38,8 @@ USER_INPUT_FN = PATH + "userCategories.json"
 
 # file named ARTICLES_FN contains a JSON array of all articles.
 # format: [{ title: string, text: string, url: string, source_url: string, predefinedCategory: string }]
-ARTICLES_FN = PATH + "bbcArticlesWithWikipediaPredefined.json"
+# ARTICLES_FN = PATH + "bbcArticlesWithWikipediaPredefined.json"
+ARTICLES_FN = PATH + "mock_data.json"
 
 # file named CLUSTERING_MODEL_FN contains a joblib model of clustering algorithm.
 MODEL_FN = PATH + "model_clustering.joblib"

@@ -14,23 +14,14 @@ block content
             canvas#myChart
 
     script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js")
-    script.        
-        function changeRight(index) {
-            articleName.innerText = articles[index].title
-            if (!chart){
-                initChart()
-            }
-            chart.data.labels = categories;
-            chart.data.datasets[0].data = articles[index].categories;
-            chart.update()
-        }
+    script.
         function urlInit(){
             //- Set first article
             var urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('id')){
                 i = urlParams.get('id')
                 if (i < articles.length){
-                    changeRight(i)
+                    updateIndex(i)
                     return
                 }
             }
@@ -88,18 +79,34 @@ block content
             });
         }
 
+        function updateIndex(i){
+            if (!isNaN(index)) document.getElementById("a-list").childNodes[index].classList.remove('active')
+            index = i
+            document.getElementById("a-list").childNodes[index].classList.add('active')
+            //right
+            articleName.innerText = articles[index].title
+            if (!chart){
+                initChart()
+            }
+            chart.data.labels = categories;
+            chart.data.datasets[0].data = articles[index].categories;
+            chart.update()
+        }
 
         // main
         articles = JSON.parse('!{JSON.stringify(articles)}');
         categories = !{JSON.stringify(categories)};
+        var index
         var ctx = document.getElementById('myChart').getContext('2d');
         var chart;
         var articleName = document.getElementById("articleName");
         urlInit()
         
         // Set listener
-        document.getElementById("a-list").childNodes.forEach((el, index) => {
-            el.addEventListener("click", (event) => changeRight(index))
+        document.getElementById("a-list").childNodes.forEach((el, i) => {
+            el.addEventListener("click", (event) => {
+                updateIndex(i)
+            })
         })
         //- var colors = ['#ff000077', '#00ff0077', '#00aaff77', '#ffaa0077', '#00ffaa77', '#aa00ff77', '#ff00aa77', '#aaff0077', '#0000ff77','#ff000077', '#00ff0077', '#0000ff77'];
         //- var els = document.getElementById('grid').childNodes;

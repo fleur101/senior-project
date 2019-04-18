@@ -32,7 +32,8 @@ USER_INPUT_FN = PATH + "userCategories.json"
 
 # file named PREDEFINED_CATEGORIES_FN contains JSON array of categories.
 # format: [{ id: string, featureWords: [string] }]
-PREDEFINED_CATEGORIES_FN = PATH + "predefinedCategories.json"
+# UPDATE!!! Since we use clustering now, it will be just range(0, N)
+# PREDEFINED_CATEGORIES_FN = PATH + "predefinedCategories.json"
 
 # file named ARTICLES_FN contains a JSON array of all articles.
 # format: [{ title: string, text: string, url: string, source_url: string, predefinedCategory: string }]

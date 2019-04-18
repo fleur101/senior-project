@@ -5,7 +5,7 @@ let debug = require("debug")("server-express:index");
 
 /* GET home page. */
 router.get("/:id", function(req, res, next) {
-  const articles = getResults();
+  const articles = getResults()[req.params.id];
   let categories = getCategories();
   //   debug(categories.length)
   res.render("category", {

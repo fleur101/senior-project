@@ -73,7 +73,7 @@ def model2_match_user_input(userInputFilename, articlesFilename,
     # map user input to clusters
     userVecs = getFeatures(userCats)
     userToPredefined = model.predict(userVecs)
-
+t
     result = [[] for _ in range(len(userCats))]
     for article in articles:
         # compute distance to each user

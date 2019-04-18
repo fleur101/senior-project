@@ -11,8 +11,8 @@ router.get("/", function(req, res, next) {
 });
 
 router.post("/", function(req, res, next) {
+  console.log(req.body);
   let categories = req.body.categories
-    .split("\r\n")
     .map(item => item.trim())
     .filter(val => val);
   writeCategories(categories);

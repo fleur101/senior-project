@@ -4,10 +4,10 @@ block content
   .title Manage inputs
   .labels-b
     //- .name Input categories
-    form(action="input", method="POST")
+    form(action="manage", method="POST")
       #labels
-        each val in categories.split("\n")
-          input.label(value=val)
+        each val, index in categories.split("\n")
+          input.label(value=val, name="categories")
       input#add(type="button", value="Add one more +")
       input(type="submit", value="save")
   //- .input
@@ -23,6 +23,7 @@ block content
     document.getElementById('add').addEventListener('click', function(event){
       let label = document.createElement('input')
       label.classList.add('label')
+      label.name = "categories"
       label.style.backgroundColor = colors[document.getElementById('labels').childNodes.length]
       document.getElementById('labels').append(label)
     })

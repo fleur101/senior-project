@@ -119,7 +119,7 @@ ol, ul {
     height: 100%; }
     .category-b .left .title {
       font-size: 24px;
-      padding: 5px; }
+      padding: 20px; }
     .category-b .left .list-b {
       background-color: #f0f0f0; }
       .category-b .left .list-b ol li {
@@ -133,5 +133,7 @@ ol, ul {
     flex-grow: 1;
     flex-basis: 1px;
     height: 100%; }
+    .category-b .right .title {
+      height: 150px; }
 
 /*# sourceMappingURL=style.css.map */

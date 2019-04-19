@@ -7,11 +7,13 @@ let debug = require("debug")("server-express:index");
 router.get("/:id", function(req, res, next) {
   const articles = getResults()[req.params.id];
   let categories = getCategories();
+  console.log(JSON.stringify(articles));
   //   debug(categories.length)
   res.render("category", {
     title: categories[req.params.id],
     categories,
-    articles
+    articles,
+    articlesStr: JSON.stringify(articles)
   });
 });
 

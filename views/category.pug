@@ -9,8 +9,7 @@ block content
                 ol#a-list
                     each el, index in articles
                         li 
-                            span #{el.title}
-                            p True category: #{el.original_category}
+                            a(href=el.url, about="_blank") #{el.title}
         .right#rightPanel
             #articleName.title
             canvas#myChart
@@ -82,7 +81,7 @@ block content
         }
 
         function updateIndex(i){
-            if (!isNaN(index)) document.getElementById("a-list").childNodes[index].classList.remove('active')
+            if (!isNaN(index)) document.getElementById("a-list").childNodes[index].classList.remove('active')   
             index = i
             document.getElementById("a-list").childNodes[index].classList.add('active')
             //right
@@ -96,7 +95,7 @@ block content
         }
 
         // main
-        articles = JSON.parse('!{JSON.stringify(articles)}');
+        articles = !{articlesStr};
         categories = !{JSON.stringify(categories)};
         var index
         var ctx = document.getElementById('myChart').getContext('2d');

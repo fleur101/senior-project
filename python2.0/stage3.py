@@ -43,7 +43,9 @@ USER_INPUT_FN = PATH + "userCategories.json"
 # PREDEFINED_CATEGORIES_FN = PATH + "predefinedCategories.json"
 
 # file named ARTICLES_FN contains a JSON array of all articles.
-# format: [{ title: string, text: string, url: string, source_url: string, predefinedCategory: string }]
+# format: [{ title: string, text: string, url: string, source_url: string, predefinedCategory: number }]
+# ARTICLES_FN = PATH + "20NGarticlesWithWikipediaPredefined.json"
+# ARTICLES_FN = PATH + "articlesWithCNNPredefined.json"
 ARTICLES_FN = PATH + "articlesWithWikipediaPredefined.json"
 # ARTICLES_FN = PATH + "mock_data.json"
 
@@ -109,9 +111,9 @@ def model2_match_user_input(userInputFilename, articlesFilename,
         if 'title' not in article:
             article['title'] = article['text'][:100]+"..."
         del article['text']
-        del article['keywords']
-        del article['meta_keywords']
-        del article['authors']
+        # del article['keywords']
+        # del article['meta_keywords']
+        # del article['authors']
         for i in article:
             if type(article[i]) == str:
                 article[i] = escape(article[i])
@@ -121,18 +123,26 @@ def model2_match_user_input(userInputFilename, articlesFilename,
         file.write(json.dumps(result))
     # hit = 0
     # miss = 0
+    # missed = np.zeros((6,6), dtype=int)
     # for ind, x in enumerate(result):
     #     for y in x:
     #         if userCats.index(y['original_category']) == ind:
     #             hit += 1
     #         else:
+    #             missed[userCats.index(y['original_category'])][ind] += 1
+    #             if y['original_category'] not in userCats:
+    #                 print("Something is wrong with categories, mismatch")
     #             miss +=1
     end = time.time()
     print(f"Time: {end - start}")
-    print("result: ")
+    # print("result: ")
     # print(f"hits: {hit}")
     # print(f"miss: {miss}")
     # print(f"score: {hit/(hit+miss)}")
+
+    # print(missed)
+    # with open(PATH+"missed.txt", "w") as f:
+    #     np.savetxt(f, missed)
 
 
 if __name__ == "__main__":
